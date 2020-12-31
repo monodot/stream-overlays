@@ -16,9 +16,15 @@
       <div class="text-2xl py-4">&bull; LIVE FROM LOCKDOWN SECTOR 12A</div>
     </div>
     <div class="absolute top-0 right-0 h-44 w-44"><img src="gudetama-looped.gif"/></div>
-    <div class="absolute left-0 bottom-0 w-56 px-4 py-4 bg-white rounded-xl">
+
+    <div class="absolute left-0 bottom-0 w-56 h-24 px-4 py-4 bg-white rounded-xl">
       <div class="text-center font-extrabold text-3xl"><span id="clock"></span></div>
       <div class="text-center text-lg"><span id="remaining"></span></div>
+    </div>
+
+    <div class="absolute left-60 bottom-0 h-24 p-4 w-auto rounded-xl bg-white">
+      <div class="font-bold text-lg">Most recent shout-out - send yours at <span class="underline">bit.ly/ca-disco</span></div>
+      <div class="text-2xl font-bold"><span id="last-shoutout">...</span></div>
     </div>
   </div>
 
@@ -44,6 +50,33 @@ function displayTime() {
     setTimeout(displayTime, 1000);               // Run again in 1 second
 }
 window.onload = displayTime;  // Start displaying the time when document loads.
+
+function displayLastShoutout(data) {
+    console.log(data);
+
+    var splitted = data.split("\r\n");
+    console.log(splitted);
+
+    var last = splitted.pop().split(",");
+    console.log(last);
+
+    var elt = document.getElementById("last-shoutout");  
+    elt.textContent = last[1] + " says.. " + last[2];
+
+}
+
+function getShoutoutSheet() {
+    var url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR3b4bfKmSWjs9ier954gPRVFGMrmGtdREjRFkNeB3P2JZ5c_620tomtIqcsqLSejAFdbA9IX1O-8jn/pub?output=csv";
+
+    fetch(url, {cache: "no-cache"})
+        .then(response => response.text())
+        .then(data => displayLastShoutout(data));
+
+    setTimeout(getShoutoutSheet, 60000);               // Run again in 60 seconds
+
+}
+getShoutoutSheet();
+
 </script>
 
 

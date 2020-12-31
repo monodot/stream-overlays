@@ -16,13 +16,36 @@
       <div class="text-2xl py-4">&bull; LIVE FROM LOCKDOWN SECTOR 12A</div>
     </div>
     <div class="absolute top-0 right-0 h-44 w-44"><img src="gudetama-looped.gif"/></div>
-    <div class="absolute left-0 bottom-0 px-8 py-4 bg-white rounded-xl">
-      <div class="text-center font-extrabold text-4xl">23:59 GMT</div>
-      <div class="text-center text-lg">1 minute to go</div>
+    <div class="absolute left-0 bottom-0 w-56 px-4 py-4 bg-white rounded-xl">
+      <div class="text-center font-extrabold text-3xl"><span id="clock"></span></div>
+      <div class="text-center text-lg"><span id="remaining"></span></div>
     </div>
   </div>
 
 </div>
+
+<script>                        // A script of js code
+// Define a function to display the current time
+function displayTime() {
+    var elt = document.getElementById("clock");  // Find element with id="clock"
+    var now = new Date();                        // Get current time
+
+    elt.innerHTML = now.getHours() + ":" + String(now.getMinutes()).padStart(2, "0") + " GMT";
+
+    var elt2 = document.getElementById("remaining");
+    var diff = new Date('2021/01/01 00:00') - now;
+    if (diff <= 0) {
+        elt2.innerHTML = "NaN NaN NaN NaN";
+    } else {
+        var mins = Math.ceil( (diff / 1000) / 60);
+        elt2.innerHTML = mins + " mins to go";
+    }
+
+    setTimeout(displayTime, 1000);               // Run again in 1 second
+}
+window.onload = displayTime;  // Start displaying the time when document loads.
+</script>
+
 
 </body>
 </html>

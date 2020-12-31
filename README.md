@@ -8,3 +8,4 @@ To run:
 
 Then access on **http://localhost:8000**
 
+You can add as an Overlay in OBS Studio by adding a _Source_ of type _Browser_, then set the URL to `http://localhost:8000/somedir` depending on the overlay you want to use.
